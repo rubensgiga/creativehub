@@ -3,131 +3,155 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Такси Город</title>
-    <style>
-      body {
-        margin: 0;
-        font-family: "Segoe UI", sans-serif;
-        background: linear-gradient(to bottom, #111, #333);
-        color: #fff;
-      }
+    <title>Мой кубический мир</title>
 
+    <!-- Pixel шрифт -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --block-bg: #d9d9d9;
+        --border-color: #555;
+        --shadow-color: #333;
+        --grass-bg: url("https://avatars.mds.yandex.net/i?id=a6c73c783c718ccaa3a6d7e9c03e2e1c_l-5232622-images-thumbs&n=13");
+      }
+      body {
+        font-family: "Press Start 2P", cursive;
+        background: var(--grass-bg);
+        background-size: 100% 100%;
+      }
       header {
-        background-color: #000;
-        padding: 20px;
+        background: #4caf50;
+        border-bottom: 8px solid #3e8e41;
         text-align: center;
+        padding: 40px 20px;
+        box-shadow: 0 8px 0 #2e7031;
+        animation: slideDown 1s ease-out;
       }
 
       header h1 {
-        color: #f1c40f;
-        font-size: 2.5em;
+        font-size: 24px;
+        text-shadow: 2px 2px #000;
       }
 
-      .hero {
-        background: url("https://images.unsplash.com/photo-1518684079-48dbb0bc1d90")
-          center/cover no-repeat;
-        padding: 80px 20px;
-        text-align: center;
+      header p {
+        font-size: 12px;
+        margin-top: 10px;
+        color: #ccebc5;
+        text-shadow: 1px 1px #000;
       }
 
-      .hero h2 {
-        font-size: 2em;
-        margin-bottom: 10px;
-        color: #fff;
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
-      .hero p {
-        font-size: 1.2em;
-        color: #eee;
+      .block-container {
+        background: var(--block-bg);
+        border: 4px solid var(--border-color);
+        border-radius: 6px;
+        box-shadow: 4px 4px 0 var(--shadow-color);
+        padding: 20px;
+        margin: 40px auto;
+        max-width: 1200px;
+        transition: transform 0.3s ease;
       }
 
-      .cta {
-        margin-top: 20px;
+      .block-container:hover {
+        transform: scale(1.01);
       }
 
-      .cta button {
-        background: #f1c40f;
-        color: #000;
-        border: none;
-        padding: 15px 30px;
-        font-size: 1em;
-        cursor: pointer;
-        border-radius: 8px;
-        transition: 0.3s;
+      .block-text {
+        font-size: 10px;
+        color: #333;
+        margin-bottom: 20px;
       }
 
-      .cta button:hover {
-        background: #d4ac0d;
-      }
-
-      section {
-        padding: 40px 20px;
-        max-width: 900px;
-        margin: auto;
-      }
-
-      .features {
+      /* === Карусель === */
+      .carousel {
         display: flex;
-        flex-wrap: wrap;
+        overflow-x: auto;
         gap: 20px;
-        justify-content: space-around;
+        padding-bottom: 10px;
+        scroll-snap-type: x mandatory;
       }
 
-      .feature {
-        background: #222;
-        border: 1px solid #444;
-        padding: 20px;
+      .carousel::-webkit-scrollbar {
+        height: 8px;
+      }
+
+      .carousel::-webkit-scrollbar-thumb {
+        background: #4caf50;
         border-radius: 10px;
-        flex: 1 1 250px;
-        text-align: center;
       }
 
-      .feature h3 {
-        color: #f1c40f;
+      .project {
+        min-width: 350px;
+        height: 220px;
+        border: 4px solid #555;
+        box-shadow: 4px 4px 0 #222;
+        background: #000;
+        scroll-snap-align: center;
+        position: relative;
       }
 
-      footer {
-        background: #111;
-        text-align: center;
-        padding: 20px;
-        font-size: 0.9em;
-        color: #aaa;
+      .project iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      .project-title {
+        position: absolute;
+        bottom: 4px;
+        left: 4px;
+        font-size: 8px;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 2px 4px;
       }
     </style>
   </head>
   <body>
     <header>
-      <h1>Такси Город</h1>
+      <h1>Ты попал в мой кубический мир</h1>
+      <p>Я — фронтенд-мастер, создающий блоки и миры из кода</p>
     </header>
 
-    <div class="hero">
-      <h2>Быстро. Удобно. Надёжно.</h2>
-      <p>Закажи такси онлайн в два клика</p>
-      <div class="cta">
-        <button onclick="alert('Заказ принят! Ожидайте машину.')">
-          Заказать такси
-        </button>
+    <div class="block-container">
+      <div class="block-text">
+        ⛏️ В этом мире ты найдёшь мои проекты, навыки и даже сможешь поиграть в
+        мини-игру. Всё, как в Minecraft — только сделано из кода!
+      </div>
+
+      <div class="carousel">
+        <div class="project">
+          <iframe src="projects/taxi/index.html"></iframe>
+          <div class="project-title">🚖 Такси-сервис</div>
+        </div>
+        <div class="project">
+          <iframe src="projects/design/index.html"></iframe>
+          <div class="project-title">🎨 Дизайн-комьюнити</div>
+        </div>
+        <div class="project">
+          <iframe src="projects/realestate/index.html"></iframe>
+          <div class="project-title">🏠 Продажа домов</div>
+        </div>
       </div>
     </div>
-
-    <section>
-      <h2 style="text-align: center">Наши преимущества</h2>
-      <div class="features">
-        <div class="feature">
-          <h3>Круглосуточно</h3>
-          <p>Работаем 24/7 без выходных</p>
-        </div>
-        <div class="feature">
-          <h3>Быстрая подача</h3>
-          <p>Среднее время ожидания — 5 минут</p>
-        </div>
-        <div class="feature">
-          <h3>Доступные цены</h3>
-          <p>От 99₽ в черте города</p>
-        </div>
-      </div>
-    </section>
-
-    <footer>&copy; 2025 Такси Город. Все права защищены.</footer>
   </body>
 </html>
