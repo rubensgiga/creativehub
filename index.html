@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CreativeHub</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d1117;
+            color: #f0f6fc;
+            scroll-behavior: smooth;
+        }
+        nav {
+            background: #161b22;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+        }
+        nav a {
+            color: #58a6ff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #1f6feb;
+        }
+        section {
+            padding: 60px 20px;
+            min-height: 100vh;
+            display: none;
+            animation: fadeIn 0.8s ease;
+        }
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        h1, h2 {
+            color: #c9d1d9;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        .gallery img {
+            width: 200px;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+        pre {
+            background: #161b22;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        #game-section {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background-color: #111;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        .game-square {
+            width: 50px;
+            height: 50px;
+            background: crimson;
+            position: absolute;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.2s ease;
+        }
+        .game-square:hover {
+            background: orangered;
+        }
+        #scoreboard {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#home">Главная</a>
+        <a href="#projects">Проекты</a>
+        <a href="#game">Игра</a>
+        <a href="#code">Пример кода</a>
+        <a href="#about">Обо мне</a>
+    </nav>
+
+    <section id="home">
+        <h1>Добро пожаловать в CreativeHub</h1>
+        <p>Твой центр творчества, кода и вдохновения!</p>
+    </section>
+
+    <section id="projects">
+        <h2>Галерея проектов</h2>
+        <div class="gallery">
+            <img src="https://placekitten.com/300/200" alt="Project 1" />
+            <img src="https://placebear.com/300/200" alt="Project 2" />
+            <img src="https://placehold.co/300x200/1f6feb/ffffff?text=Project+3" alt="Project 3" />
+        </div>
+    </section>
+
+    <section id="game">
+        <h2>🎮 Игра: Поймай квадрат</h2>
+        <div id="scoreboard">Очки: <span id="score">0</span> | Время: <span id="time">30</span> сек</div>
+        <div id="game-section"></div>
+    </section>
+
+    <section id="code">
+        <h2>💡 Пример HTML + CSS + JS</h2>
+        <pre><code>&lt;button onclick="alert('Привет, мир!')"&gt;Нажми меня&lt;/button&gt;
+
+&lt;style&gt;
+button {
+  background: #1f6feb;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+}
+&lt;/style&gt;</code></pre>
+    </section>
+
+    <section id="about">
+        <h2>Обо мне</h2>
+        <p>Я — Рубен, frontend-разработчик и креативщик. Добро пожаловать в мой цифровой мир! 🚀</p>
+    </section>
+
+    <script>
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll("nav a");
+
+        function showSection(id) {
+            sections.forEach(s => s.style.display = "none");
+            const target = document.getElementById(id);
+            if (target) target.style.display = "block";
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener("click", e => {
+                e.preventDefault();
+                const id = link.getAttribute("href").slice(1);
+                showSection(id);
+                if (id === "game") startGame();
+            });
+        });
+
+        window.onload = () => showSection("home");
+
+        // Game
+        const gameArea = document.getElementById('game-section');
+        let score = 0;
+        let timeLeft = 30;
+        let interval, timer;
+
+        function createSquare() {
+            const square = document.createElement('div');
+            square.className = 'game-square';
+            square.style.top = Math.random() * (gameArea.clientHeight - 50) + 'px';
+            square.style.left = Math.random() * (gameArea.clientWidth - 50) + 'px';
+            square.onclick = () => {
+                score++;
+                document.getElementById('score').textContent = score;
+                square.remove();
+            };
+            gameArea.appendChild(square);
+        }
+
+        function startGame() {
+            gameArea.innerHTML = '';
+            score = 0;
+            timeLeft = 30;
+            document.getElementById('score').textContent = score;
+            document.getElementById('time').textContent = timeLeft;
+
+            clearInterval(interval);
+            clearInterval(timer);
+
+            interval = setInterval(createSquare, 1000);
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('time').textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    clearInterval(timer);
+                    gameArea.innerHTML = '<h3>⏱ Время вышло! Ты набрал: ' + score + ' очков.</h3>';
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
